@@ -1,0 +1,10 @@
+{
+  "public": {
+    "mqtt": {
+      "host": "0.0.0.0",
+      "username": "yourname",
+      "password": "yourpass",
+      "port": 9001
+    }
+  }
+}

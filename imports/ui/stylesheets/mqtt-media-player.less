@@ -1,0 +1,32 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  transform: translateX(-50%) translateY(-50%);
+  transition: 1s opacity;
+}
+
+.debug-console {
+  width: 800px;
+  background-color: rgba(255,255,255,0.4);
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: scroll;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
