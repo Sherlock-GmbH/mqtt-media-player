@@ -5,6 +5,9 @@
       "username": "yourname",
       "password": "yourpass",
       "port": 9001
-    }
+    },
+    "plugins": [
+      "audio", "video"
+    ]
   }
 }
