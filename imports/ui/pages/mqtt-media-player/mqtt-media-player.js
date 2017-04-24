@@ -13,7 +13,8 @@ host = Meteor.settings.public.mqtt.host || 'localhost';
 port = Meteor.settings.public.mqtt.port || 9001;
 username = Meteor.settings.public.mqtt.username || null;
 password = Meteor.settings.public.mqtt.password || null;
-topic = '#';		// topic to subscribe to
+plugins = Meteor.settings.public.plugins || ['audio','video'];
+topic = '#';  // topic to subscribe to
 useTLS = false;
 cleansession = true;
 
@@ -21,6 +22,8 @@ var mqtt;
 var reconnectTimeout = 2000;
 var ap;
 var vp;
+var audioTracks = [];
+var selectedAudioTrack = 0;
 
 var MQTTconnect = function() {
   if (typeof path == "undefined") {
@@ -64,23 +67,23 @@ function onConnectionLost(response) {
   $('#status').val("connection lost: " + response.errorMessage + ". Reconnecting");
 }
 
-function onMessageArrived(message) {
-  var topic = message.destinationName;
-  var action = topic.split('/').pop();
-  var payload = message.payloadString;
-
+// Audio
+function audioHandler(action, payload) {
+  var ap = audioTracks[selectedAudioTrack];
+  console.log(audioTracks);
   switch (action) {
-    // General
-    case 'stop-all':
-      if(ap) ap.stop();
-      if(vp) vp.stop();
-      break;
-    // Audio
     case 'play-audio':
-      ap = new AudioPlayer({file: payload, volume: 100});
+      audioTracks.push(
+        new AudioPlayer({file: payload, volume: 100})
+      );
       break;
     case 'stop-audio':
       if(ap) ap.stop();
+      break;
+    case 'stop-all-audio':
+      for(var s=0; s < audioTracks.length; s++) {
+        audioTracks[s].stop();
+      }
       break;
     case 'pause-audio':
       if(ap) ap.pause();
@@ -88,7 +91,15 @@ function onMessageArrived(message) {
     case 'resume-audio':
       if(ap) ap.resume();
       break;
-    // Video
+    case 'select-audio-track':
+      selectedAudioTrack = payload;
+      break;
+  }
+}
+
+// Video
+function videoHandler(action, payload) {
+  switch (action) {
     case 'play-video':
       vp = new VideoPlayer({file: payload});
       break;
@@ -101,6 +112,25 @@ function onMessageArrived(message) {
     case 'resume-video':
       if(vp) vp.resume();
       break;
+  }
+}
+
+function onMessageArrived(message) {
+  var topic = message.destinationName;
+  var action = topic.split('/').pop();
+  var payload = message.payloadString;
+
+  switch (action) {
+    // General
+    case 'stop-all':
+      if(ap) ap.stop();
+      if(vp) vp.stop();
+      break;
+  }
+
+  // check plugin settings and filter out non active ones
+  for(var i=0; i < plugins.length; i++) {
+    eval(plugins[i] + 'Handler')(action, payload);
   }
 
   $('#ws').prepend('<li>' + topic + ': ' + payload + '</li>');

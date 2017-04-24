@@ -24,7 +24,9 @@ The player offers a simple MQTT message interface, with general, video or audio 
 
 *Example*
 Browser URL: http://www.example.com/custom-namespace/mqtt-media-player/custom-player-id
+
 Topic: custom-namespace/mqtt-media-player/custom-player-id/play-video
+
 Payload: https://archive.org/download/Mario1_500/Mario1_500_HQ_512kb.mp4
 
 ## Audio Player
@@ -38,7 +40,9 @@ Payload: https://archive.org/download/Mario1_500/Mario1_500_HQ_512kb.mp4
 
 *Example*
 Browser URL: http://www.example.com/custom-namespace/mqtt-media-player/custom-player-id
+
 Topic: custom-namespace/mqtt-media-player/custom-player-id/play-audio
+
 Payload: https://archive.org/download/testmp3testfile/mpthreetest.mp3
 
 ### Log of MQTT messages
