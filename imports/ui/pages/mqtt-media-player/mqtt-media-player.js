@@ -77,6 +77,11 @@ function audioHandler(action, payload) {
         new AudioPlayer({file: payload, volume: 100})
       );
       break;
+    case 'play-audio-loop':
+      audioTracks.push(
+        new AudioPlayer({file: payload, volume: 100, loop: true})
+      );
+      break;
     case 'stop-audio':
       if(ap) ap.stop();
       break;

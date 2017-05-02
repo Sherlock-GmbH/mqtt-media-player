@@ -2,6 +2,7 @@ AudioPlayer = function(ctx){
   this.vol = ctx.volume || 100;
   this.autoplay = ctx.autoplay || true;
   this.audio = new Audio(ctx.file);
+  this.audio.loop = ctx.loop || false;
 
   if(this.autoplay) this.audio.play();
 }
