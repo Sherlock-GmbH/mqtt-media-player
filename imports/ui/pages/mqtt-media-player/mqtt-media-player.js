@@ -68,6 +68,13 @@ function onConnectionLost(response) {
 }
 
 // Audio
+function stopAllAudio() {
+  for(var s=0; s < audioTracks.length; s++) {
+    audioTracks[s].stop();
+  }
+  audioTracks = [];
+}
+
 function audioHandler(action, payload) {
   var ap = audioTracks[selectedAudioTrack];
   console.log(audioTracks);
@@ -77,7 +84,7 @@ function audioHandler(action, payload) {
       audioTracks.push(
         new AudioPlayer({file: payload, volume: 100, ended: function() {
             // clean up memory
-            audioTracks[pos] = null;
+            delete audioTracks[pos];
           }
         })
       );
@@ -91,10 +98,7 @@ function audioHandler(action, payload) {
       if(ap) ap.stop();
       break;
     case 'stop-all-audio':
-      for(var s=0; s < audioTracks.length; s++) {
-        audioTracks[s].stop();
-      }
-      audioTracks = [];
+      stopAllAudio();
       break;
     case 'pause-audio':
       if(ap) ap.pause();
@@ -134,7 +138,7 @@ function onMessageArrived(message) {
   switch (action) {
     // General
     case 'stop-all':
-      if(ap) ap.stop();
+      stopAllAudio()
       if(vp) vp.stop();
       break;
   }
