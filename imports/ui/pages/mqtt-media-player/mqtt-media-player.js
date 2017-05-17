@@ -73,8 +73,13 @@ function audioHandler(action, payload) {
   console.log(audioTracks);
   switch (action) {
     case 'play-audio':
+      var pos = audioTracks.length;
       audioTracks.push(
-        new AudioPlayer({file: payload, volume: 100})
+        new AudioPlayer({file: payload, volume: 100, ended: function() {
+            // clean up memory
+            audioTracks[pos] = null;
+          }
+        })
       );
       break;
     case 'play-audio-loop':
@@ -89,6 +94,7 @@ function audioHandler(action, payload) {
       for(var s=0; s < audioTracks.length; s++) {
         audioTracks[s].stop();
       }
+      audioTracks = [];
       break;
     case 'pause-audio':
       if(ap) ap.pause();
