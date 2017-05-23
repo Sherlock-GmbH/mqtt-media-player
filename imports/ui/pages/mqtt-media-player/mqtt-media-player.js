@@ -70,7 +70,10 @@ function onConnectionLost(response) {
 // Audio
 function stopAllAudio() {
   for(var s=0; s < audioTracks.length; s++) {
-    audioTracks[s].stop();
+    if(audioTracks[s]){
+      audioTracks[s].stop();
+      delete audioTracks[s];
+    }
   }
   audioTracks = [];
 }
