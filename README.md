@@ -4,7 +4,7 @@ The goal of this little app is to provide a simple web audio and web video playe
 It provides a interface via MQTT messages.
 
 # MQTT - Message Interface
-The player offers a simple MQTT message interface, with general, video or audio specific messages.
+The player offers a simple MQTT message interface, with general, video, audio or midi specific messages.
 
 ## General
 
@@ -44,6 +44,24 @@ Browser URL: http://www.example.com/custom-namespace/mqtt-media-player/custom-pl
 Topic: custom-namespace/mqtt-media-player/custom-player-id/play-audio
 
 Payload: https://archive.org/download/testmp3testfile/mpthreetest.mp3
+
+## Midi Player
+Use this player if you want to offer a simple Soundfont player and play it via a connected Midi device.
+
+Per default we use the General Midi sounds of https://github.com/gleitz/midi-js-soundfonts
+
+*Subscription*
+
+| topic                | payload                | default                 |
+|----------------------|------------------------|-------------------------|
+| midi-set-instrument  | sound-name             | acoustic_grand_piano    |
+| midi-set-type        | soundfont or synth     | synth                   |
+
+*Publishing*
+
+| topic                                                           | payload        |
+|-----------------------------------------------------------------|----------------|
+| custom-namespace/mqtt-media-player/custom-player-id/midi/notes  | note (e.g. C4) |
 
 ### Log of MQTT messages
 

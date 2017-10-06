@@ -7,7 +7,7 @@
       "port": 9001
     },
     "plugins": [
-      "audio", "video"
+      "audio", "video", "midi"
     ]
   }
 }
