@@ -54,9 +54,9 @@ export default class MidiPlayer {
           break;
         default:
           this.instr.play(e.note.name + e.note.octave);
-          if(this.noteon) this.noteon(e.note.name + e.note.octave)
           break;
       }
+      if(this.noteon) this.noteon(e.note.name + e.note.octave)
     })
     this.input.addListener('noteoff', 'all', (e) => {
       switch (this.sndType) {
