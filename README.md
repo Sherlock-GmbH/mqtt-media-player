@@ -76,6 +76,12 @@ Schema Log entry:
 }
 ```
 
+## Docker Setup
+
+```
+docker build -t sherlock/mqtt-media-player .
+```
+
 ## Mosquitto broker configuration
 The app is using standard websockets to establish a connection to the MQTT broker.
 
