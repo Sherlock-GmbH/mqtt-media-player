@@ -4,10 +4,16 @@
       "host": "0.0.0.0",
       "username": "yourname",
       "password": "yourpass",
-      "port": 9001
+      "port": 9001,
+      "serverNamespace": "yournamespace",
+      "serverPlayerId": "yourplayerid"
     },
     "plugins": [
       "audio", "video", "midi"
-    ]
+    ],
+    "serverPlugins": [
+      "audio"
+    ],
+    "logging": false
   }
 }

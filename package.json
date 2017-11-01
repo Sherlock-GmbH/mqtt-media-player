@@ -10,6 +10,7 @@
     "meteor-node-stubs": "~0.2.3",
     "mqtt": "^2.6.2",
     "mqtt-regex": "^1.0.5",
+    "play-sound": "^1.1.1",
     "soundfont-player": "^0.10.6",
     "webmidi": "^2.0.0-rc.7"
   }
