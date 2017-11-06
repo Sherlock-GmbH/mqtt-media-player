@@ -12,7 +12,7 @@
       "audio", "video", "midi"
     ],
     "serverPlugins": [
-      "audio"
+      "audio", "booting"
     ],
     "logging": false
   }
