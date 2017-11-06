@@ -1,4 +1,6 @@
+import { exec } from 'child_process'
 import Player from 'play-sound'
+import kill from 'tree-kill'
 
 export default class Audio {
 
@@ -6,6 +8,7 @@ export default class Audio {
     console.log('Init Audio Plugin.')
     this.player = new Player({})
     this.audio = null
+    this.loop = null
   }
 
   mqttInterface() {
@@ -23,7 +26,22 @@ export default class Audio {
     )
   }
 
+  playLoop(file) {
+    this.loop = exec('while :; do afplay ' + file + '; done')
+  }
+
   stopAudio() {
-    this.audio.kill()
+    if(this.loop) this.stopRunningPlayer()
+    if(this.audio) this.audio.kill()
+  }
+
+  stopRunningPlayer() {
+    const sref = this.loop
+    if(sref && sref.pid > 0){
+      kill(sref.pid, 'SIGTERM', function(){
+        console.log('Killed player with PID: ', sref.pid)
+        this.loop = null
+      })
+    }
   }
 }

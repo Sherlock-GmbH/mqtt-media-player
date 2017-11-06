@@ -12,6 +12,7 @@
     "mqtt-regex": "^1.0.5",
     "play-sound": "^1.1.1",
     "soundfont-player": "^0.10.6",
+    "tree-kill": "^1.2.0",
     "webmidi": "^2.0.0-rc.7"
   }
 }
