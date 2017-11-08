@@ -48,7 +48,11 @@ export default class Mqtt {
                   // get topic action
                   if(topic.indexOf(action) > -1) {
                     console.log(topic, action)
-                    connector[action](message.toString())
+                    const msg = message.toString()
+                    // check if we deal with JSON
+                    const jsObj = this.isJsonString(msg)
+                    if(jsObj) connector[action](jsObj)
+                    else connector[action](msg)
                     return
                   }
                 })
@@ -58,6 +62,14 @@ export default class Mqtt {
         }
       })
     )
+  }
+
+  isJsonString(jsonString) {
+    try {
+        var o = JSON.parse(jsonString)
+        if (o && typeof o === 'object') return o
+    } catch(e) { }
+    return false
   }
 
   addConnector(con) {

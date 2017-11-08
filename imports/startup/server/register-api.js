@@ -3,6 +3,7 @@ import '../../api/logs/methods.js'
 import Mqtt from '../../api/mqtt/server'
 import Audio from '../../api/audio/server'
 import Booting from '../../api/booting'
+import Speech from '../../api/speech/server'
 
 const mqtt = new Mqtt()
 
@@ -17,6 +18,9 @@ if( Meteor.settings.public.serverPlugins &&
     }
     if(plugin === 'booting') {
       mqtt.addConnector(new Booting())
+    }
+    if(plugin === 'speech') {
+      mqtt.addConnector(new Speech())
     }
   })
 }
