@@ -8,11 +8,14 @@ export default class Audio {
     console.log('Init Audio Plugin.')
     this.player = new Player({})
     this.audio = null
-    this.loop = null
+    this.loops = []
   }
 
   mqttInterface() {
-    return ['playAudio', 'stopAudio', 'playLoop']
+    return [
+      'playAudio', 'stopAudio',
+      'playAudioLoop', 'stopAudioLoops'
+    ]
   }
 
   playAudio(file) {
@@ -26,22 +29,31 @@ export default class Audio {
     )
   }
 
-  playLoop(file) {
-    this.loop = exec('while :; do afplay ' + file + '; done')
+  playAudioLoop(file) {
+    // configure arguments for executable if any
+    console.log('playLoop: ', file)
+    this.loops.push(
+      exec('while :; do afplay ' + file + '; done')
+    )
   }
 
   stopAudio() {
-    if(this.loop) this.stopRunningPlayer()
     if(this.audio) this.audio.kill()
   }
 
+  stopAudioLoops() {
+    if(this.loops.length > 0)
+      this.stopRunningPlayer()
+  }
+
   stopRunningPlayer() {
-    const sref = this.loop
-    if(sref && sref.pid > 0){
-      kill(sref.pid, 'SIGTERM', function(){
-        console.log('Killed player with PID: ', sref.pid)
-        this.loop = null
-      })
-    }
+    this.loops.forEach((sref) => {
+      if(sref && sref.pid > 0) {
+        kill(sref.pid, 'SIGTERM', function(){
+          console.log('Killed player with PID: ', sref.pid)
+        })
+      }
+    })
+    this.loops = []
   }
 }
