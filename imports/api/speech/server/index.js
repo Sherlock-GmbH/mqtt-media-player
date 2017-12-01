@@ -29,10 +29,13 @@ export default class Speech {
   }
 
   say(txt) {
+    this.stopTalking()
     this.speechProc = exec(this.call + ' "' + txt + '"')
   }
 
   stopTalking() {
-    kill(this.speechProc)
+    if(this.speechProc && this.speechProc.pid) {
+      kill(this.speechProc.pid)
+    }
   }
 }
