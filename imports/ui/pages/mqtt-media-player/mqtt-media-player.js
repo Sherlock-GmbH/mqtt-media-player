@@ -136,6 +136,9 @@ function midiHandler(action, payload) {
     case 'midi-set-instrument':
       if(mp) mp.setInstrument(payload)
       break
+    case 'toggle-mute':
+      if(mp) mp.toggleMute()
+      break
   }
 }
 

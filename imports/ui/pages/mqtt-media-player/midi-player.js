@@ -21,6 +21,7 @@ export default class MidiPlayer {
     this.noteon = ctx.noteon || undefined
     this.sndType = ctx.sndType || 'synth'
     this.synth = new Synth()
+    this.isMuted = false
 
     // select MIDI input
     WebMidi.enable((err) => {
@@ -48,6 +49,7 @@ export default class MidiPlayer {
   }
   setListeners(){
     this.input.addListener('noteon', 'all', (e) => {
+      if(this.isMuted) return
       switch (this.sndType) {
         case 'synth':
           this.synth.startTone(e.note.name + e.note.octave)
@@ -59,6 +61,7 @@ export default class MidiPlayer {
       if(this.noteon) this.noteon(e.note.name + e.note.octave)
     })
     this.input.addListener('noteoff', 'all', (e) => {
+      if(this.isMuted) return
       switch (this.sndType) {
         case 'synth':
           this.synth.stopTone(e.note.name + e.note.octave)
@@ -68,6 +71,9 @@ export default class MidiPlayer {
           break;
       }
     })
+  }
+  toggleMute() {
+    this.isMuted = (this.isMuted) ? false : true
   }
   setInstrument(instrument) {
     this.instrName = instrument
