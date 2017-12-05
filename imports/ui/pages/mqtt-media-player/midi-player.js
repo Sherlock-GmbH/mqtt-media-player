@@ -72,7 +72,11 @@ export default class MidiPlayer {
       }
     })
   }
-  toggleMute() {
+  toggleMute(mode) {
+    if(mode){
+      this.isMuted = (mode === 'on') ? true : false
+      return
+    }
     this.isMuted = (this.isMuted) ? false : true
   }
   setInstrument(instrument) {
