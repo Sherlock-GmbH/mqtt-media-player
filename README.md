@@ -82,6 +82,25 @@ Schema Log entry:
 docker build -t sherlock/mqtt-media-player .
 ```
 
+## Build Meteor app
+In project directory do a `meteor build` and write the app bundle to a parent folder outside of your app folder.
+
+```
+meteor build --directory ../builds/mqtt-media-player
+```
+
+If we use `MONGO_URL=none` no mongodb connection is established. Which is useful when setting `logging` to false in your `settings.json`.
+
+
+```
+export METEOR_SETTINGS="$(cat ../../mqtt-media-player/settings.json )"
+export MONGO_URL=none
+export PORT='80' 
+export ROOT_URL='http://localhost'
+node main.js
+```
+
+
 ## Mosquitto broker configuration
 The app is using standard websockets to establish a connection to the MQTT broker.
 
