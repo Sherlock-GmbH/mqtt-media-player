@@ -144,6 +144,7 @@ function midiHandler(action, payload) {
 
 function onMessageArrived(message) {
   var topic = message.destinationName
+  // get the last word of topic
   var action = topic.split('/').pop()
   var payload = message.payloadString
 
