@@ -160,7 +160,10 @@ function onMessageArrived(message) {
     eval(plugins[i] + 'Handler')(action, payload)
   }
 
-  $('#ws').prepend('<li>' + topic + ': ' + payload + '</li>')
+  // write debug output when console is visible
+  if($('.debug-console').css('display') === 'block') {
+    $('#ws').prepend('<li>' + topic + ': ' + payload + '</li>')
+  }
 }
 
 Template.mqttMediaPlayer.onCreated(function(){
